@@ -77,35 +77,19 @@ class Game:
 					elif event.type == KEYDOWN:
 						if event.key == K_ESCAPE:
 							self.running = False
-					elif event.type == MOUSEBUTTONDOWN:
-						x = event.pos[0]/32	
-						y = event.pos[1]/32
-						if event.button == 1:
-							# detect collision with a unit, and select it, first deselecting the current
-							player.highlight.move(x,y)
-							#print player.highlight.rect
-							#newselect = pygame.sprite.spritecollide(player.highlight, ug, False)
-							#print newselect
-							if newselect != []:
-								# we have clicked on a unit.  
-								if newselect[0] == player.selection:
-									# if we click on it again, we deselect
-									player.selection.deselect()
-									player.selection = []
-								else:
-									# drop the current one, and select a new one.
-									player.select(newselect[0])
-									#player.selection.highlight = player.highlight
-							elif player.selection:
-								player.selection.move(x, y)
-
+						if event.key == K_TAB:
+							self.notePlayed = True;
+							self.previousNote = "note"
+					
 	def clockTick(self):
 		self.tick = self.tick+1
 		self.metronome.circle(self.tick, self.gap)
-		if (self.metronome.doABeat(self.tick)):
+		#print self.metronome.doABeat(self.tick)
+		if (self.metronome.doABeat(self.tick) == True):
 			self.stateChange()
 	
 	def stateChange(self):
+		#print "statechanging"
 		if self.state == NOTE:
 			if (self.notePlayed):
 				self.state = ACTION
@@ -130,14 +114,12 @@ class Metronome:
 	
 	def circle(self,tick,gap):
 		x = tick*gap*self.ticksPerBeat/60/60
-		print x
 		pygame.draw.circle(self.screen, (255,0,0), (x + 10,70),5)
 	
 	def doABeat(self, tick):
 		if (tick > self.ticksPerBeat * self.beat):
 			self.beat = self.beat + 1
 			if (self.beat%self.timeSig == 1):
-				self.beat = 1
 				return True
 		return False
 	
@@ -160,14 +142,6 @@ def main():
 		
 		game.clockTick()
 		
-		#for o in gameObjects:
-			#game.screen.blit(o.image, o.rect, o.rect)
-		#unitsprites.update()
-
-		#unitsprites.draw(screen)
-
-		#gamechrome.draw(game.screen, player)
-
 		pygame.display.update()
 
 
