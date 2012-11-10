@@ -55,7 +55,7 @@ class Game:
 		
 		self.notePlayed = False
 		
-		self.metronome = Metronome(60, 4)
+		self.metronome = Metronome(60, 4, self.screen)
 	
 	def guideLines(self,x,y,width,height,measures,beats):
 		self.beats = beats
@@ -101,7 +101,7 @@ class Game:
 
 	def clockTick(self):
 		self.tick = self.tick+1
-		self.metronome.circle(self.gap)
+		self.metronome.circle(self.tick, self.gap)
 		if (self.metronome.doABeat(self.tick)):
 			self.stateChange()
 	
@@ -122,14 +122,16 @@ class Game:
 			
 			
 class Metronome:
-	def __init__(self, bpm, timeSig):
+	def __init__(self, bpm, timeSig, screen):
 		self.beat = 1
 		self.ticksPerBeat = bpm
 		self.timeSig = timeSig
+		self.screen = screen
 	
-	def circle(gap):
-		
-		pygame.draw.circle(self.screen, (255,0,0), (self.tick + 10,70),5)
+	def circle(self,tick,gap):
+		x = tick*gap*self.ticksPerBeat/60/60
+		print x
+		pygame.draw.circle(self.screen, (255,0,0), (x + 10,70),5)
 	
 	def doABeat(self, tick):
 		if (tick > self.ticksPerBeat * self.beat):
