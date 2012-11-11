@@ -6,7 +6,7 @@ class Level(object):
 	__metaclass__ = ABCMeta
 	
 	import metronome
-
+	
 	@abstractmethod
 	def getStartText():
 		raise NotImplementedError

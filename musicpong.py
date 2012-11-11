@@ -24,7 +24,8 @@ class Game:
 		
 		self.running = True
 		
-		self.level = TimingLevel()
+		self.levels = [TimingLevel(),TimingLevel()]
+		self.level = self.levels.pop()
 		
 		self.guideLines(10,50,1,70,4,4) #todo - move this
 	
@@ -70,6 +71,14 @@ class Game:
 	
 	def update(self):
 		self.level.update()
+		
+		if( self.level.isComplete() ):
+			print "VICTORY"
+			if (self.levels):
+				self.level = self.levels.pop()
+				self.level.start()
+			else:
+				exit()
 	
 def main():
 	pygame.init()

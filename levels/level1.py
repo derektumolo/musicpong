@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 import Level
+from metronome import Metronome
 
 class TimingLevel(Level.Level):
 	from logicBlocks.halfNote import getStartText,getEndText,getTempo,\
@@ -10,17 +11,17 @@ class TimingLevel(Level.Level):
 
 	def __init__(self):
 		self.numberOfBeats = 4
-		self.currentBeat = 1
+		self.bpm = 60
+		self.metronome = Metronome(self.bpm, self.numberOfBeats)
 	def getEndText(self):
 		print "Level 1 end text"
 	def update(self):
-		metronome.upate()
-		if(metronome.isAtNextBeat()):
-				currentBeat = currentBeat + 1
-				print "Next beat - now on beat ", currentBeat
+		self.metronome.update()
+		if(self.metronome.isAtNextBeat()):
+				print "Next beat - now on beat ", self.metronome.getBeat()
 	
 	def isComplete(self):
-		if (currentBeat > numberOfBeats):			
+		if (self.metronome.getBeat() > self.numberOfBeats):			
 			return True 
 
 	def isValidState(self):
