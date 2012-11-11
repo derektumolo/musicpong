@@ -1,87 +1,67 @@
 import pygame
+import pygame.midi
 import os
+import sc
 from levels.level1 import TimingLevel
 from pygame.locals import *
 
-NOTE = 0
-ACTION = 1
-		
 class Game:
 	def __init__(self):
-		self.screen = pygame.display.set_mode((640, 480))
-		pygame.display.set_caption('RockPong')
-
-		self.background = pygame.Surface(self.screen.get_size())
-		self.background = self.background.convert()
-		self.background.fill((0, 0, 0))
-		
-		# Blit everything to the screen
-		self.screen.blit(self.background, (0, 0))
-		pygame.display.flip()
-
-		# Initialise clock
-		self.clock = pygame.time.Clock()
-		
-		self.running = True
+		self.s_keyDown=144
+		self.s_velocityValue=127.0
+    		self.keyboards = (pygame.midi.Input(3),pygame.midi.Input(5))
+    		self.clock = pygame.time.Clock()
+    		self.running = True
 		
 		self.levels = [TimingLevel(),TimingLevel()]
 		self.level = self.levels.pop()
-		
-		self.guideLines(10,50,1,70,4,4) #todo - move this
-	
-	def guideLines(self,x,y,width,height,measures,beats):
-		self.beats = beats
-		count = beats*measures
-		self.gap = (640 - (width*(count+1)) - 20)/count
-		
-		for r in range(0,count+1):
-			if (r%beats == 0):
-				pygame.draw.rect(self.screen, (0,0,255), (x,y,width,height))
-			else:
-				pygame.draw.rect(self.screen, (0,255,0), (x,y,width,height/2))
-			x = x + self.gap
-
-	def handleKeyboardInput(self):
-		for event in pygame.event.get():
-			if event.type == QUIT:
-				self.running = False
-				return
-			elif event.type == KEYDOWN:
-				if event.key == K_ESCAPE:
-					self.running = False
-				else:
-					self.level.handleMusicInput(1, event)
-			
-	#def handleMusicInput(self):
-	#	#self.level.handleMusicInput()
-	#	pass
+		self.level.getStartText()
 	
 	def update(self):
 		self.level.update()
+		event_get = pygame.fastevent.get
+		events = event_get()
+	
+		for keyboard in self.keyboards:
+			if keyboard.poll():
+				midi_events = keyboard.read(10)
+				print self.getPlayer(keyboard)," ",midi_events[0][0]
+				self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
+		
+		for event in events:
+		    if event.type == KEYDOWN:
+			if event.key in [K_1,K_q,K_a,K_z]:
+				self.level.handleKeyboardInput(1,event.key)	
+			if event.key in [K_HOME,K_PAGEUP,K_PAGEDOWN,K_END]:
+				self.level.handleKeyboardInput(2,event.key)	
 		
 		if( self.level.isComplete() ):
-			print "VICTORY"
+			self.level.getEndText()
 			if (self.levels):
 				self.level = self.levels.pop()
-				self.level.start()
+				self.level.getStartText()
 			else:
+				print "All levels completed successfully!"
 				exit()
 	
+	def getPlayer(self,keyboardID):
+		if(keyboardID == self.keyboards[0]):
+				return 1
+		else:
+				return 2
+	
 def main():
+	
 	pygame.init()
+	pygame.fastevent.init()
+	pygame.midi.init()
 
 	game = Game() 
 
 	while game.running:
-	# Make sure game doesn't run at more than 60 frames per second
+		
 		game.clock.tick(60)
-		
-		game.handleKeyboardInput()
-		#game.handleMusicInput()
-		
 		game.update()
-		
-		pygame.display.update()
 
 if __name__ == '__main__': main()
 
