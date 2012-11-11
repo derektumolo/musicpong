@@ -6,6 +6,7 @@ from levels.level1 import TimingLevel
 from pygame.locals import *
 
 class Game:
+	
 	def __init__(self):
 		self.s_keyDown=144
 		self.s_velocityValue=127.0
@@ -19,22 +20,28 @@ class Game:
 	
 		
 	def update(self):
-		self.level.update()
+		
+		# get events
 		event_get = pygame.fastevent.get
 		events = event_get()
 	
+		# process midi keyboard events
 		for keyboard in self.keyboards:
 			if keyboard.poll():
 				midi_events = keyboard.read(10)
 				print self.getPlayer(keyboard)," ",midi_events[0][0]
 				self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
 		
+		# process computer keyboard events
 		for event in events:
 		    if event.type == KEYDOWN:
 			if event.key in [K_1,K_q,K_a,K_z]:
 				self.level.handleKeyboardInput(1,event.key)	
 			if event.key in [K_HOME,K_PAGEUP,K_PAGEDOWN,K_END]:
 				self.level.handleKeyboardInput(2,event.key)	
+		
+		# process level updates
+		self.level.update()
 		
 		if( self.level.isComplete() ):
 			self.level.getEndText()
