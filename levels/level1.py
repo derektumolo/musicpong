@@ -1,11 +1,14 @@
 #! /usr/bin/python
 
-from level import Level
+import Level
 
-class TimingLevel(Level):
+class TimingLevel(Level.Level):
 	from logicBlocks.halfNote import getStartText,getEndText,getTempo,\
 					 getBackgroundInstrument,getInstrumentList,isValidState,\
-					 isButtonPressValid,playBackgroundInstrument
+					 isButtonPressValid,playBackgroundInstrument,update
+	
+	def __init__(self):
+		pass
 	def getEndText(self):
 		print "Level 1 end text"
 

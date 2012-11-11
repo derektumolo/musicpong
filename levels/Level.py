@@ -4,6 +4,8 @@ from abc import ABCMeta,abstractmethod
 
 class Level(object):
 	__metaclass__ = ABCMeta
+	
+	import metronome
 
 	@abstractmethod
 	def getStartText():
@@ -36,3 +38,8 @@ class Level(object):
 	@abstractmethod
 	def playBackgroundInstrument():
 		raise NotImplementedError
+	
+	@abstractmethod
+	def update():
+		raise NotImplementedError
+	

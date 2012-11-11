@@ -21,3 +21,6 @@ def isButtonPressValid(buttonPress,tickValue):
 
 def playBackgroundInstrument(self):
 	print "Background Instrument"
+	
+def update(self):
+	print "dooobeee doobee doo"
