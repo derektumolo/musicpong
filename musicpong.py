@@ -28,7 +28,13 @@ class Game:
 				midi_events = keyboard.read(10)
 				print self.getPlayer(keyboard)," ",midi_events[0][0]
 				self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
-
+		
+		for event in events:
+		    if event.type == KEYDOWN:
+			if event.key in [K_1,K_q,K_a,K_z]:
+				self.level.handleKeyboardInput(1,event.key)	
+			if event.key in [K_HOME,K_PAGEUP,K_PAGEDOWN,K_END]:
+				self.level.handleKeyboardInput(2,event.key)	
 		
 		if( self.level.isComplete() ):
 			self.level.getEndText()
