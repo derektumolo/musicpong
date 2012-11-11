@@ -6,6 +6,7 @@ import os
 import re
 
 from levels.level1 import TimingLevel
+from levels.level2 import MatchLevel
 from pygame.locals import *
 
 class Game:
@@ -17,9 +18,9 @@ class Game:
     		self.clock = pygame.time.Clock()
     		self.running = True
 		
-		self.levels = [TimingLevel(),TimingLevel()]
+		self.levels = [TimingLevel(),TimingLevel(),MatchLevel()]
 		self.level = self.levels.pop()
-		self.level.getStartText()
+		print self.level.startText
 	
 	def update(self):
 		
@@ -31,7 +32,7 @@ class Game:
 		for keyboard in self.keyboards:
 			if keyboard and keyboard.poll():
 				midi_events = keyboard.read(10)
-				print self.getPlayer(keyboard)," ",midi_events[0][0]
+				#print self.getPlayer(keyboard)," ",midi_events[0][0]
 				self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
 		
 		# process computer keyboard events
@@ -58,7 +59,7 @@ class Game:
 				exit()
 		
 		if ( self.level.failed() ):
-			print "failed"
+			print "YOU LOSE"
 			exit()
 	
 	def getPlayer(self,keyboardID):
