@@ -1,8 +1,8 @@
 import pygame
 import pygame.midi
 import os
-
-#import sc
+import time
+import sc
 import re
 
 from levels.level1 import TimingLevel
@@ -17,7 +17,7 @@ class Game:
     		self.clock = pygame.time.Clock()
     		self.running = True
 		
-		self.levels = [TimingLevel(),TimingLevel()]
+		self.levels = [TimingLevel(),TimingLevel(),TimingLevel(),TimingLevel()]
 		self.level = self.levels.pop()
 		self.level.getStartText()
 	
@@ -31,7 +31,6 @@ class Game:
 		for keyboard in self.keyboards:
 			if keyboard and keyboard.poll():
 				midi_events = keyboard.read(10)
-				print self.getPlayer(keyboard)," ",midi_events[0][0]
 				self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
 		
 		# process computer keyboard events
@@ -59,6 +58,7 @@ class Game:
 		
 		if ( self.level.failed() ):
 			print "failed"
+			time.sleep(5)
 			exit()
 	
 	def getPlayer(self,keyboardID):
@@ -84,6 +84,9 @@ def main():
 	pygame.init()
 	pygame.fastevent.init()
 	pygame.midi.init()
+	
+	# initialize supercollider
+	sc.start()
 
 	game = Game() 
 
