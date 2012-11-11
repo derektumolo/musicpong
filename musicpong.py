@@ -29,10 +29,10 @@ class Game:
 	
 		# process midi keyboard events
 		for keyboard in self.keyboards:
-			if keyboard.poll():
+			if keyboard and keyboard.poll():
 				midi_events = keyboard.read(10)
 				print self.getPlayer(keyboard)," ",midi_events[0][0]
-				#self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
+				self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
 		
 		# process computer keyboard events
 		for event in events:
@@ -78,13 +78,7 @@ class Game:
 					return pygame.midi.Input(i)
 				else:
 					devicesFound = devicesFound + 1
-				
-		print "NO DEVICE FOUND - EXITING"
-		exit()			
 
-			
-
-	
 def main():
 	
 	pygame.init()

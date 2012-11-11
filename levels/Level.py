@@ -67,7 +67,9 @@ class Level(object):
 	def advanceState(self):
 		if (self.state == NOTE):
 			self.state = ACTION
+			print "moving from Note to Action"
 		else:
+			print "moving from Action to Note, and changing player"
 			self.state = NOTE
 			self.changeActivePlayer
 			self.notesPlayed[self.activePlayer] = []

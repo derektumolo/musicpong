@@ -41,7 +41,8 @@ class TimingLevel(Level.Level):
 		if self.state == NOTE:
 			return True
 		else:
-			print "in else"
+			print "in else - "
+			print self.notesPlayed[self.activePlayer]
 			if self.notesPlayed[self.activePlayer]:
 				print "notes played"
 				print self.notesPlayed[self.activePlayer]
