@@ -106,7 +106,7 @@ class Game:
 			self.stateChange()
 	
 	def playedCorrect():
-		pass
+		passx
 	
 	def stateChange(self):
 		#print "statechanging"
