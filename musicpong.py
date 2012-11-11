@@ -2,7 +2,7 @@ import pygame
 import pygame.midi
 import os
 import re
-import sc
+#import sc
 from levels.level1 import TimingLevel
 from pygame.locals import *
 
