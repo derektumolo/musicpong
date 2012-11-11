@@ -1,3 +1,6 @@
+NOTE = 1
+ACTION = 2
+
 def getStartText(self):
 	print "Start Text"
 	
@@ -16,8 +19,18 @@ def getInstrumentList(self):
 def isValidState(tickValue):
 	print "Valid State" 
 
-def isButtonPressValid(buttonPress,tickValue):
+def handleMusicInput(self, player, note):
+	print note
+	if(isButtonPressValid(self,player,note)):
+		self.notesPlayed[self.getActivePlayer()].append(note)
+
+def isButtonPressValid(self,player, buttonPress):
 	print "Button Press"
+	if(self.getActivePlayer() ==  player):
+		if (self.getState() == NOTE):
+			return True
+		else:
+			return False
 
 def playBackgroundInstrument(self):
 	print "Background Instrument"

@@ -6,7 +6,7 @@ class Level(object):
 	__metaclass__ = ABCMeta
 	
 	import metronome
-	
+		
 	@abstractmethod
 	def getStartText():
 		raise NotImplementedError
@@ -43,3 +43,19 @@ class Level(object):
 	def update():
 		raise NotImplementedError
 	
+	@abstractmethod
+	def handleMusicInput(input):
+		raise NotImplementedError
+		
+	def isComplete(self):
+		if (self.metronome.getBeat() > self.numberOfBeats):			
+			return True 
+	
+	def getActivePlayer(self):
+		return self.activePlayer
+		
+	def start(self):
+		pass
+		
+	def getState(self):
+		return self.state

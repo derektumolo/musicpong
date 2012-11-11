@@ -49,25 +49,12 @@ class Game:
 			elif event.type == KEYDOWN:
 				if event.key == K_ESCAPE:
 					self.running = False
-				if event.key == K_TAB:
-					self.notePlayed = True;
-					self.previousNote = "note"
+				else:
+					self.level.handleMusicInput(1, event)
 			
-	def handleMusicInput(self):
-		if (self.ActivePlayer == source):	
-			if (self.state == NOTE):			
-				self.notePlayed = True;
-				if (self.playedGoodNote()):
-					#play success msg
-					pass
-				if (firstTurn):
-					self.firstTurn = False
-					pass
-				else: 
-					#play bad note
-					pass
-			else: 
-				self.action = action
+	#def handleMusicInput(self):
+	#	#self.level.handleMusicInput()
+	#	pass
 	
 	def update(self):
 		self.level.update()
