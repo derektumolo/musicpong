@@ -26,7 +26,8 @@ class Game:
 		for keyboard in self.keyboards:
 			if keyboard.poll():
 				midi_events = keyboard.read(10)
-				level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
+				print self.getPlayer(keyboard)," ",midi_events[0][0]
+				self.level.handleMusicInput(self.getPlayer(keyboard),midi_events[0][0])
 
 		
 		if( self.level.isComplete() ):
