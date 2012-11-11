@@ -1,7 +1,7 @@
 import pygame
 import pygame.midi
 import os
-import sc
+#import sc
 from levels.level1 import TimingLevel
 from pygame.locals import *
 
@@ -43,6 +43,10 @@ class Game:
 			else:
 				print "All levels completed successfully!"
 				exit()
+		
+		if ( self.level.failed() ):
+			print "failed"
+			exit()
 	
 	def getPlayer(self,keyboardID):
 		if(keyboardID == self.keyboards[0]):

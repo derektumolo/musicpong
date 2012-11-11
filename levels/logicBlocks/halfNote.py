@@ -23,11 +23,12 @@ def handleMusicInput(self, player, note):
 	print note
 	if(isButtonPressValid(self,player,note)):
 		self.notesPlayed[self.getActivePlayer()].append(note)
+		self.state = ACTION
 
 def isButtonPressValid(self,player, buttonPress):
 	print "Button Press"
 	if(self.getActivePlayer() ==  player):
-		if (self.getState() == NOTE):
+		if (self.getState() == NOTE and not self.notesPlayed):
 			return True
 		else:
 			return False

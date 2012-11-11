@@ -2,6 +2,9 @@
 
 from abc import ABCMeta,abstractmethod 
 
+NOTE = 1
+ACTION = 2
+
 class Level(object):
 	__metaclass__ = ABCMeta
 	
@@ -59,3 +62,16 @@ class Level(object):
 		
 	def getState(self):
 		return self.state
+		
+	def advanceState(self):
+		if (self.state == NOTE):
+			self.state = ACTION
+		else:
+			self.state = NOTE
+			self.changeActivePlayer
+	
+	def changeActivePlayer(self):
+		if self.activePlayer == 1:
+			self.activePlayer = 2
+		else:
+			self.activePlayer = 1

@@ -28,8 +28,11 @@ class TimingLevel(Level.Level):
 	def update(self):
 		self.metronome.update()
 		if(self.metronome.isAtNextBeat()):
-				print "Next beat - now on beat ", self.metronome.getBeat()
-
+			print "Next beat - now on beat ", self.metronome.getBeat()
+			self.advanceState()
+			if(not self.isValidState()):
+				self.failed = True
+				
 	def isValidState(self):
 		return True
 
