@@ -1,3 +1,5 @@
+import sc
+
 NOTE = 1
 ACTION = 2
 
@@ -31,7 +33,7 @@ def isButtonPressValid(self,player, buttonPress):
 			return False
 
 def playBackgroundInstrument(self):
-	print "Background Instrument"
+	print "Background instrument"
 	
 def update(self):
-	print "dooobeee doobee doo"
+	print "Update self in halfNote"

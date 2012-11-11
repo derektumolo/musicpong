@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
 import Level
+import sc
 from metronome import Metronome
 
 NOTE = 1
@@ -12,16 +13,18 @@ class TimingLevel(Level.Level):
 					 isButtonPressValid,playBackgroundInstrument,update, handleMusicInput
 
 	def __init__(self):
+		
 		self.beatsPerMeasure = 4
-		self.numMeasures = 3
-		self.bpm = 30
+		self.numMeasures = 6
+		self.bpm = 140
 		self.activePlayer = 1
+		self.elapsedTurns = 0
+		self.numFailures = 0
+		
 		self.state = NOTE
 		self.fail = False
-		self.notesPlayed = {
-            1: [],
-            2: [],
-			}
+		self.notesPlayed = { 1: [], 2: [] }
+		
 		self.metronome = Metronome(self.bpm, self.beatsPerMeasure)
 		
 	def getEndText(self):
@@ -30,10 +33,10 @@ class TimingLevel(Level.Level):
 	def update(self):
 		self.metronome.update()
 		if(self.metronome.isAtNextBeat()):
-			print "Next beat - now on beat ", self.metronome.getBeat()
+			sine = sc.Synth( "click" )
+			sine.amp  = 0.2
 			self.advanceState()
 			if(not self.isValidState()):
-				print "setting failure"
 				self.fail = True
 				
 	def isValidState(self):
@@ -41,14 +44,30 @@ class TimingLevel(Level.Level):
 		if self.state == NOTE:
 			return True
 		else:
-			print "in else - "
-			print self.notesPlayed[self.activePlayer]
 			if self.notesPlayed[self.activePlayer]:
-				print "notes played"
-				print self.notesPlayed[self.activePlayer]
+				sine = sc.Synth( "sine" )
+				sine.freq = 60+ (self.activePlayer * 3) + self.elapsedTurns 
+				sine.amp  = 0.9
 				return True
-		print "returning false"
-		return False
+		#return False
+		if (self.numFailures > 4):
+			return False
+		else:
+			self.numFailures = self.numFailures + 1
+			sine = sc.Synth( "saw" )
+			sine.freq = 36 + (self.numFailures * 12) 
+			sine.amp  = 0.6
+			return True
+	
+	def advanceState(self):
+		if (self.state == NOTE):
+			self.state = ACTION
+		else:
+			self.state = NOTE
+			self.changeActivePlayer()
+			self.notesPlayed[self.activePlayer] = []
+			self.elapsedTurns = self.elapsedTurns + 2
+	
 
 
 if __name__ == '__main__':

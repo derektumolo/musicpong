@@ -49,10 +49,13 @@ class Level(object):
 	@abstractmethod
 	def handleMusicInput(input):
 		raise NotImplementedError
-		
+
+	@abstractmethod
+	def advanceState(self):
+		raise NotImplementedError
+	
 	def isComplete(self):
 		if (self.metronome.getBeat() > self.numMeasures*self.beatsPerMeasure):			
-			print "too many beats"
 			return True 
 	
 	def getActivePlayer(self):
@@ -64,16 +67,6 @@ class Level(object):
 	def getState(self):
 		return self.state
 		
-	def advanceState(self):
-		if (self.state == NOTE):
-			self.state = ACTION
-			print "moving from Note to Action"
-		else:
-			print "moving from Action to Note, and changing player"
-			self.state = NOTE
-			self.changeActivePlayer
-			self.notesPlayed[self.activePlayer] = []
-	
 	def changeActivePlayer(self):
 		if self.activePlayer == 1:
 			self.activePlayer = 2
