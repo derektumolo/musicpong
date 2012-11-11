@@ -51,7 +51,8 @@ class Level(object):
 		raise NotImplementedError
 		
 	def isComplete(self):
-		if (self.metronome.getBeat() > self.numberOfBeats):			
+		if (self.metronome.getBeat() > self.numMeasures*self.beatsPerMeasure):			
+			print "too many beats"
 			return True 
 	
 	def getActivePlayer(self):
@@ -69,9 +70,13 @@ class Level(object):
 		else:
 			self.state = NOTE
 			self.changeActivePlayer
+			self.notesPlayed[self.activePlayer] = []
 	
 	def changeActivePlayer(self):
 		if self.activePlayer == 1:
 			self.activePlayer = 2
 		else:
 			self.activePlayer = 1
+			
+	def failed(self):
+		return self.fail

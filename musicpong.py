@@ -48,6 +48,7 @@ class Game:
 		self.level.update()
 		
 		if( self.level.isComplete() ):
+			print "level complete"
 			self.level.getEndText()
 			if (self.levels):
 				self.level = self.levels.pop()

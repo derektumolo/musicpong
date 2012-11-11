@@ -12,15 +12,17 @@ class TimingLevel(Level.Level):
 					 isButtonPressValid,playBackgroundInstrument,update, handleMusicInput
 
 	def __init__(self):
-		self.numberOfBeats = 4
-		self.bpm = 60
+		self.beatsPerMeasure = 4
+		self.numMeasures = 3
+		self.bpm = 30
 		self.activePlayer = 1
 		self.state = NOTE
+		self.fail = False
 		self.notesPlayed = {
             1: [],
             2: [],
 			}
-		self.metronome = Metronome(self.bpm, self.numberOfBeats)
+		self.metronome = Metronome(self.bpm, self.beatsPerMeasure)
 		
 	def getEndText(self):
 		print "Level 1 end text"
@@ -31,10 +33,21 @@ class TimingLevel(Level.Level):
 			print "Next beat - now on beat ", self.metronome.getBeat()
 			self.advanceState()
 			if(not self.isValidState()):
-				self.failed = True
+				print "setting failure"
+				self.fail = True
 				
 	def isValidState(self):
-		return True
+		print self.state
+		if self.state == NOTE:
+			return True
+		else:
+			print "in else"
+			if self.notesPlayed[self.activePlayer]:
+				print "notes played"
+				print self.notesPlayed[self.activePlayer]
+				return True
+		print "returning false"
+		return False
 
 
 if __name__ == '__main__':

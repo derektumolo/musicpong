@@ -17,8 +17,7 @@ class Metronome:
 	def	isAtNextBeat(self):
 		if (self.tick > self.ticksPerBeat * self.beat):
 			self.beat = self.beat + 1
-			if (self.beat%self.timeSig == 1):
-				return True
+			return True
 		return False
 	
 	def getBeat(self):
