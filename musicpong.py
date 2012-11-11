@@ -6,6 +6,8 @@ import sc
 import re
 
 from levels.level1 import TimingLevel
+from levels.singleMatch import SingleMatchLevel
+from levels.doubleMatch import DoubleMatchLevel
 from pygame.locals import *
 
 class Game:
@@ -17,7 +19,7 @@ class Game:
     		self.clock = pygame.time.Clock()
     		self.running = True
 		
-		self.levels = [TimingLevel(),TimingLevel(),TimingLevel(),TimingLevel()]
+		self.levels = [TimingLevel(),TimingLevel(),SingleMatchLevel()]
 		self.level = self.levels.pop()
 		self.level.getStartText()
 	
