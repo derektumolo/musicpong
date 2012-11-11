@@ -26,7 +26,6 @@ class Measure(pygame.sprite.Sprite):
 
 NOTE = 0
 ACTION = 1
-
 		
 class Game:
 	def __init__(self):
@@ -38,8 +37,6 @@ class Game:
 		self.background = self.background.convert()
 		self.background.fill((0, 0, 0))
 		
-		#gamechrome = chrome.Chrome()
-
 		# Blit everything to the screen
 		self.screen.blit(self.background, (0, 0))
 		pygame.display.flip()
@@ -71,16 +68,36 @@ class Game:
 
 	def handleKeyboardInput(self):
 		for event in pygame.event.get():
-					if event.type == QUIT:
-						self.running = False
-						return
-					elif event.type == KEYDOWN:
-						if event.key == K_ESCAPE:
-							self.running = False
-						if event.key == K_TAB:
-							self.notePlayed = True;
-							self.previousNote = "note"
-					
+			if event.type == QUIT:
+				self.running = False
+				return
+			elif event.type == KEYDOWN:
+				if event.key == K_ESCAPE:
+					self.running = False
+				if event.key == K_TAB:
+					self.notePlayed = True;
+					self.previousNote = "note"
+			
+	def handleMusicInput(self):
+		if (self.ActivePlayer == source):	
+			if (self.state == NOTE):			
+				self.notePlayed = True;
+				if (self.playedGoodNote()):
+					#play success msg
+					pass
+				if (firstTurn):
+					self.firstTurn = False
+					pass
+				else: 
+					#play bad note
+					pass
+			else: 
+				self.action = action
+	
+	def playedGoodNote(self):
+		
+		pass
+	
 	def clockTick(self):
 		self.tick = self.tick+1
 		self.metronome.circle(self.tick, self.gap)
@@ -88,13 +105,17 @@ class Game:
 		if (self.metronome.doABeat(self.tick) == True):
 			self.stateChange()
 	
+	def playedCorrect():
+		pass
+	
 	def stateChange(self):
 		#print "statechanging"
 		if self.state == NOTE:
-			if (self.notePlayed):
+			if (self.playedCorrect()):
 				self.state = ACTION
-			else :
-				print "Yo, play something you noob."
+			elif (self.firstTurn == False) :
+				print "Yo, play something noob."
+				self.state = LOSE
 		else:
 			if (self.activePlayer == 1):
 				self.activePlayer = 2
@@ -103,7 +124,6 @@ class Game:
 			print "new turn"
 			self.state = NOTE
 			self.notePlayed = False
-			
 			
 class Metronome:
 	def __init__(self, bpm, timeSig, screen):
