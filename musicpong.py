@@ -78,7 +78,8 @@ class Game:
 				else:
 					devicesFound = devicesFound + 1
 				
-				
+		print "NO DEVICE FOUND - EXITING"
+		exit()			
 
 			
 
